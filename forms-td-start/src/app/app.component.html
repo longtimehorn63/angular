@@ -1,0 +1,81 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+      <!-- form tag instructs angular that this is a form and it will
+                   create a javascript object for this form.  However you must 
+                   manually tell angular which objects on the form will be
+                   reflected in the javascript object by adding the 
+                   ngModel with the name 
+
+                   the nbSumit is the form submit action for the angular form
+
+                   #f is local reference ngForm tells it the javascript object
+      -->
+      <form (ngSubmit)="onSubmit()" #f="ngForm">  
+        <!-- ngModelGroup will group the values together with the key name of the group-->
+        <div id="user-data" ngModelGroup="userData" #userData="ngModelGroup">
+          <div class="form-group">
+            <label for="username">Username</label>
+            <input 
+              type="text" 
+              id="username" 
+              class="form-control"
+              ngModel name="username"
+              required>
+          </div>
+          <button class="btn btn-default" type="button" (click)="suggestUserName()">Suggest an Username</button>
+          <div class="form-group">
+            <label for="email">Mail</label>
+            <!-- the # is creating a local reference, this time to ngModel -->
+            <input type="email" id="email" class="form-control"
+              ngModel name="email"
+              required
+              email
+              #email="ngModel">
+               <!-- shows the error message only if the local reference variable is invalid -->
+              <span class="help-block" *ngIf="!email.valid && email.touched">Please enter a valid email!</span>
+          </div>
+        </div>
+        <!-- shows the error message only if the local reference variable for the group is invalid -->
+       <span class="help-block" *ngIf="!userData.valid && userData.touched">User Data is invalid!</span>
+        <!-- property binding (one way) ngModel allows for a default value -->
+        <div class="form-group">
+          <label for="secret">Secret Questions</label>
+          <select id="secret" class="form-control"
+            [ngModel]="defaultQuestion" 
+            name="secret">
+            <option value="pet">Your first Pet?</option>
+            <option value="teacher">Your first teacher?</option>
+          </select>
+        </div>
+        <!-- [(ngModel)] - two way binding to property -->
+        <div class="form-group">
+          <textarea name="questionAnswer" rows="3" class="form-control"
+          [(ngModel)]="answer"></textarea>
+        </div>
+        <p>Your reply: {{ answer }}</p>
+        <div class="radio" *ngFor="let gender of genders">
+           <label>
+             <input type="radio" name="gender" [ngModel]="defaultGender" [value]="gender" required>{{ gender }}
+           </label>
+        </div>
+        <button 
+          class="btn btn-primary" 
+          type="submit"
+          [disabled]="!f.valid"
+          >Submit</button>
+      </form>
+    </div>
+  </div>
+  <div class="row" *ngIf="submitted">
+    <div class="col-xs-12">
+        <hr>
+        <h3>Your Data</h3>
+        <p>Username: {{ user.name }}</p>
+        <p>Mail: {{ user.email }}</p>
+        <p>Secret Question: Your First {{ user.secretQuestion }}</p>
+        <p>Answer: {{ user.answer }}</p>
+        <p>Gender: {{ user.gender }}</p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,47 @@
+<div class="row">
+  <div class="col-xs-12">
+    <p>Add new Servers or blueprints!</p>
+    <label>Server Name</label>
+    <!-- Using two way binding to link the content to the property -->
+    <!-- <input 
+      type="text" 
+      class="form-control" 
+      [(ngModel)]="newServerName"> -->
+
+
+    <!-- to place a local reference on the element using
+       the '#' + element name-->
+    <input 
+      type="text" 
+      class="form-control" 
+      #serverNameInput>
+    <label>Server Content</label>
+    <!-- Using two way binding to link the content to the property -->
+    <!-- <input type="text" class="form-control" [(ngModel)]="newServerContent"> -->
+
+    <!-- to place a local reference on the element using
+       the '#' + element name-->
+    <input 
+      type="text" 
+      class="form-control" 
+      #serverContentInput>
+    <br>
+    <!-- using the standard with two way binding-->
+    <!-- <button
+      class="btn btn-primary"
+      (click)="onAddServer()">Add Server</button> -->
+    <!-- using the new local reference-->
+    <button
+        class="btn btn-primary"
+        (click)="onAddServer(serverNameInput)">Add Server</button>
+    
+    <!-- using the standard with two way binding-->
+    <!-- <button
+      class="btn btn-primary"
+      (click)="onAddBlueprint()">Add Server Blueprint</button> -->
+  <!-- using the new local reference-->
+    <button
+        class="btn btn-primary"
+        (click)="onAddBlueprint(serverNameInput)">Add Server Blueprint</button>
+  </div>
+</div>

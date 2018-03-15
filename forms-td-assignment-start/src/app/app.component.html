@@ -1,0 +1,61 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+      <!-- Add a Form with the following Inputs (and Validators)
+           1) Mail address (should not be empty and should be an email address)
+           2) A Dropdown which allows the user to select from three different Subscriptions ("Basic", "Advanced", "Pro")
+              Set "Advanced" as Default
+           3) A Password field (should not be empty)
+           4) A Submit Button
+
+           Display a warning message if the Form is invalid AND was touched. Display a warning message below each input if it's invalid.
+
+           Upon submitting the form, you should simply print the Value of the Form to the Console.
+           Optionally, display it in your template.
+      -->
+      <form (ngSubmit)="OnSubmit()" #f="ngForm">
+        <div class="form-group">
+          <label for="email">Mail</label>
+          <!-- the # is creating a local reference, this time to ngModel -->
+          <input type="email" id="email" class="form-control"
+            ngModel name="email"
+            required
+            email
+            #email="ngModel">
+             <!-- shows the error message only if the local reference variable is invalid -->
+            <span class="help-block" *ngIf="!email.valid && email.touched">Please enter a valid email!</span>
+        </div>
+        <div class="form-group">
+          <label for="level">Subscription Level:</label>
+          <select id="level" class="form-control"
+            [ngModel]="defaultLevel" 
+            name="level">
+              <option *ngFor="let subscription of subscriptions" [value]="subscription">{{ subscription }}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" class="form-control"
+            ngModel name="password"
+            required
+            #password="ngModel">
+            <!-- the password here is only for the # reference -->
+            <span class="help-block" *ngIf="!password.valid && password.touched">Please enter a valid password!</span>
+        </div>
+        <span class="help-block" *ngIf="!f.valid && f.touched">Please enter valid data!</span>
+        <button class="btn btn-primary"
+          type="submit"
+          [disabled]="!f.valid">Submit</button>
+      </form>
+    </div>
+  </div>
+  <div class="row" *ngIf="submitted">
+    <div class="col-xs-12">
+        <hr>
+        <h3>Your Data</h3>
+        <p>email: {{ user.email }}</p>
+        <p>Mail: {{ user.level }}</p>
+        <p>password: {{ user.password }}</p>
+    </div>
+  </div>
+</div>
